@@ -1,7 +1,7 @@
 {
-  "name": "kingbot",
+  "name": "feelgoodbot",
   "version": "1.0.0",
-  "description": "Bot that distorts images.",
+  "description": "Bot that likes all posts.",
   "engines": {
     "node": "5.9.1"
   },
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://studeo14@bitbucket.org/studeo14/king-bot.git"
+    "url": "https://studeo14@bitbucket.org/studeo14/feel-good-bot.git"
   },
   "keywords": [
     "node",
