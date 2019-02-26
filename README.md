@@ -9,3 +9,9 @@ A GroupMe bot that comes in two parts:
 2. Install deps with `pip install -r requirements.txt`
 3. Schedule `notify.py` with a job manager like cron
 4. Run `app.py`
+
+## Upcoming Features
+- Implement `app.py`
+ - Look for trigger (configurable?) and reply with list of `name`:`star count`
+ - Database read
+- Dockerize
