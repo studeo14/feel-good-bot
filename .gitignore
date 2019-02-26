@@ -1,2 +1,8 @@
-node_modules/
 **/*.swp
+__pycache__
+bin
+lib
+lib64
+pyvenv.cfg
+db.json
+real_envs.sh
