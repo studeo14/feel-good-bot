@@ -43,3 +43,5 @@ def webhook():
     message = request.get_json()
     if is_request(message):
         send_leaderboard(message)
+
+    return "ok", 200
