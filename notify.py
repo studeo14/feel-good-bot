@@ -2,11 +2,15 @@
 
 # IMPORTS
 import os
+import sys
 import json
+import time
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from tinydb import TinyDB, Query
 from tinydb.operations import increment
+from utils import get_members, reply
+import schedule
 
 bot_id = os.environ['BOT_ID']
 access_token = os.environ['ACCESS_TOKEN']
@@ -15,11 +19,6 @@ crown = '👑'
 
 
 # Send a message in the groupchat
-def reply(msg):
-    url = 'https://api.groupme.com/v3/bots/post'
-    data = {'bot_id': bot_id, 'text': msg}
-    request = Request(url, urlencode(data).encode())
-    body = urlopen(request).read().decode()
 
 def read_leaderboard():
     url = 'https://api.groupme.com/v3/groups/{}/likes?period=day&token={}'.format(group_id, access_token)
@@ -51,38 +50,33 @@ def find_top_poster(leaderboard):
             uids = [top_message['user_id']]
         return (uids, top_message_likes)
 
-def get_members():
-    url = 'https://api.groupme.com/v3/groups/{}?token={}'.format(group_id, access_token)
-    request = Request(url)
-    group = json.loads(urlopen(request).read().decode())['response']
-    return group['members']
-
 def notify_chat(top_posters):
     if top_posters is None:
         pass
     else:
-        members = get_members()
+        members = get_members(group_id, access_token)
         members = [member for member in members if member['user_id'] in top_posters[0]]
         if len(members) == 1:
             member = members[0]
             message = '{} had the top post yesterday with {} likes!'.format(member['nickname'], top_posters[1])
-            reply(message)
+            reply(message, bot_id)
         elif len(members) > 1:
             nicks = [m['nickname'] for m in members]
             nicks = '\n'.join(nicks)
             message = 'These members tied for the top post yesterday with {} likes!\n{}'.format(top_posters[1], nicks)
-            reply(message)
+            reply(message, bot_id)
 
 def add_stars(top_poster):
     db = TinyDB('./db.json')
     User = Query()
-    for poster in top_poster[0]:
-        if db.contains(User.uid == poster):
-            db.update(increment('stars'), User.uid == poster)
-        else:
-            db.insert({'uid': poster, 'stars': 1})
+    if top_poster is not None:
+        for poster in top_poster[0]:
+            if db.contains(User.uid == poster):
+                db.update(increment('stars'), User.uid == poster)
+            else:
+                db.insert({'uid': poster, 'stars': 1})
 
-def main():
+def notify():
     # read leaderboard using access token
     # find top poster (post with highest # of likes)
     # tell the chat who the top poster is as the bot
@@ -93,4 +87,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 1:
+        schedule.every().day.at("00:00").do(notify);
+        while True:
+            schedule.run_pending()
+            time.sleep(60*60)
+    else:
+        notify()
