@@ -41,7 +41,9 @@ def send_leaderboard(message):
 @app.route('/', methods=['POST'])
 def webhook():
     message = request.get_json()
+    print("Got message")
     if is_request(message):
+        print("Got request")
         send_leaderboard(message)
 
     return "ok", 200
