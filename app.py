@@ -34,7 +34,7 @@ def send_leaderboard(message):
     leaders = ids_to_names(leaders)
     leaders_stats_string = ''
     for leader in leaders:
-        leaders_stats_string += '{}: {}'.format(leader['name'], leader['stars'])
+        leaders_stats_string += '{}: {}\n'.format(leader['name'], leader['stars'])
     message = "@{}\nAll time stats:\n{}".format(recip, leaders_stats_string)
     reply(message, bot_id)
 
