@@ -6,8 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.app
-    expose:
-      - "8000:8000"
+    ports:
+      - "8000/tcp"
     volumes:
       - datadbvolume:/usr/src/app/data
   notify:
