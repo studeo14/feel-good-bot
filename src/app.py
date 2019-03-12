@@ -19,7 +19,7 @@ def is_request(message):
     return BOT_NAME in message['text']
 
 def read_from_db():
-    db = TinyDB('./db.json')
+    db = TinyDB('./data/db.json')
     leaders = db.all()
     return leaders
 

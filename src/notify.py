@@ -67,7 +67,7 @@ def notify_chat(top_posters):
             reply(message, bot_id)
 
 def add_stars(top_poster):
-    db = TinyDB('./db.json')
+    db = TinyDB('./data/db.json')
     User = Query()
     if top_poster is not None:
         for poster in top_poster[0]:

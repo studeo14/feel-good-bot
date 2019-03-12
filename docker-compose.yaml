@@ -1,0 +1,18 @@
+version: '3'
+volumes:
+  datadbvolume:
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    expose:
+      - "8000"
+    volumes:
+      - datadbvolume:/usr/src/app/data
+  notify:
+    build:
+      context: .
+      dockerfile: Dockerfile.notify
+    volumes:
+      - datadbvolume:/usr/src/app/data
