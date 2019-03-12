@@ -1,6 +1,6 @@
 version: '3.3'
 volumes:
-  datadbvolume:
+  data:
 services:
   app:
     build:
@@ -10,7 +10,7 @@ services:
       - "8000:8000/tcp"
     volumes:
       - type: volume
-        source: datadbvolume
+        source: data
         target: /usr/src/app/data
         volume:
           nocopy: true
@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile.notify
     volumes:
       - type: volume
-        source: datadbvolume
+        source: data
         target: /usr/src/app/data
         volume:
           nocopy: true
