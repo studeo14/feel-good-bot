@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile.app
     ports:
-      - "8000/tcp"
+      - "8000:8000/tcp"
     volumes:
       - datadbvolume:/usr/src/app/data
   notify:
