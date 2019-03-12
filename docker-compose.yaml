@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile.app
     expose:
-      - "8000"
+      - "8000:8000"
     volumes:
       - datadbvolume:/usr/src/app/data
   notify:
