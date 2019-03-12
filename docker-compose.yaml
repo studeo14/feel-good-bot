@@ -9,10 +9,18 @@ services:
     ports:
       - "8000:8000/tcp"
     volumes:
-      - datadbvolume:/usr/src/app/data
+      - type: volume
+        source: datadbvolume
+        target: /usr/src/app/data
+        volume:
+          nocopy: true
   notify:
     build:
       context: .
       dockerfile: Dockerfile.notify
     volumes:
-      - datadbvolume:/usr/src/app/data
+      - type: volume
+        source: datadbvolume
+        target: /usr/src/app/data
+        volume:
+          nocopy: true
