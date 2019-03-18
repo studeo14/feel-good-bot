@@ -6,15 +6,19 @@ ENV PYTHONUSERBASE /pips/
 RUN pip install --user --no-cache-dir -r requirements.txt
 
 FROM python:3
+RUN apt update && apt -y install cron
 WORKDIR /usr/src/app
 COPY --from=intermediate /pips /pips
 COPY scripts/run_notify.sh .
 COPY scripts/real_envs.sh .
+COPY scripts/notify_cron /etc/cron.d/notify_cron
+RUN chmod 0644 /etc/cron.d/notify_cron
+RUN crontab /etc/cron.d/notify_cron
+RUN touch /var/log/cron.log
 RUN mkdir src
 RUN ls -la /pips/bin
 COPY src/notify.py src/
 COPY src/utils.py src/
 ENV PYTHONUSERBASE /pips/
 ENV PATH $PYTHONUSERBASE/bin:$PATH
-CMD ./run_notify.sh
-
+CMD cron && tail -r /var/log/cron.log
