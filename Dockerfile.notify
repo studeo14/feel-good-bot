@@ -21,4 +21,4 @@ COPY src/notify.py src/
 COPY src/utils.py src/
 ENV PYTHONUSERBASE /pips/
 ENV PATH $PYTHONUSERBASE/bin:$PATH
-CMD cron && tail -r /var/log/cron.log
+CMD cron && tail -f /var/log/cron.log
