@@ -1,2 +1,2 @@
-0 0 * * * cd /usr/src/app && ./run_notify.py >> /var/log/cron.log 2>&1
+0 0 * * * cd /usr/src/app && /bin/bash run_notify.py >> /var/log/cron.log 2>&1
 
