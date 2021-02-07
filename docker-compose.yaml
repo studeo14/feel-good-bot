@@ -1,0 +1,26 @@
+version: '3.3'
+volumes:
+  data:
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "8000:8000/tcp"
+    volumes:
+      - type: volume
+        source: data
+        target: /usr/src/app/data
+        volume:
+          nocopy: true
+  notify:
+    build:
+      context: .
+      dockerfile: Dockerfile.notify
+    volumes:
+      - type: volume
+        source: data
+        target: /usr/src/app/data
+        volume:
+          nocopy: true

@@ -48,8 +48,7 @@ def find_top_poster(leaderboard):
             uids = [m['user_id'] for m in top_message]
         else:
             uids = [top_message['user_id']]
-        return (uids, top_message_likes)
-
+        return (uids, top_message_likes) 
 def notify_chat(top_posters):
     if top_posters is None:
         pass
@@ -67,7 +66,7 @@ def notify_chat(top_posters):
             reply(message, bot_id)
 
 def add_stars(top_poster):
-    db = TinyDB('./db.json')
+    db = TinyDB('./data/db.json')
     User = Query()
     if top_poster is not None:
         for poster in top_poster[0]:
@@ -87,10 +86,4 @@ def notify():
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        schedule.every().day.at("00:00").do(notify);
-        while True:
-            schedule.run_pending()
-            time.sleep(60*60)
-    else:
-        notify()
+    notify()

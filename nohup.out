@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "src/notify.py", line 10, in <module>
+    from tinydb import TinyDB, Query
+ModuleNotFoundError: No module named 'tinydb'
